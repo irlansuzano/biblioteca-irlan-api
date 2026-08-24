@@ -1,0 +1,112 @@
+package br.edu.infnet.biblioteca_irlan_api.domain;
+
+import com.google.common.base.MoreObjects;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+public class Turma {
+
+    private String identificador;
+    private Professor professorCoordenador;
+    private boolean ativo;
+
+    private Curso curso;
+    private List<Aluno> alunos = new ArrayList<>();
+
+    public Turma() {
+    }
+
+    public Turma(String identificador, Professor professorCoordenador, boolean ativo) {
+        this.identificador = identificador;
+        this.professorCoordenador = professorCoordenador;
+        this.ativo = ativo;
+    }
+
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(String identificador) {
+        this.identificador = identificador;
+    }
+
+    public Professor getProfessorCoordenador() {
+        if (professorCoordenador == null) {
+            throw new IllegalArgumentException("O professor coordenador não pode ser nulo!!!");
+        }
+        return professorCoordenador;
+    }
+
+    public void setProfessorCoordenador(Professor professorCoordenador) {
+        this.professorCoordenador = professorCoordenador;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        if (curso == null) {
+            throw new IllegalArgumentException("O curso não pode ser nulo!!!");
+        }
+        this.curso = curso;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public List<Aluno> getAlunos() {
+        return Collections.unmodifiableList(alunos);
+    }
+
+    public void setAlunos(List<Aluno> alunos) {
+        if (alunos == null || alunos.isEmpty()) {
+            throw new IllegalArgumentException("É necessário informar pelo menos um aluno para a turma");
+        }
+        this.alunos = alunos;
+    }
+
+    public void adicionarAluno(Aluno aluno) {
+        if (aluno == null) {
+            throw new IllegalArgumentException("O aluno não pode ser nulo!!!");
+        }
+        alunos.add(aluno);
+
+        aluno.setTurma(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Turma turma = (Turma) o;
+        return Objects.equals(identificador, turma.identificador)
+                && Objects.equals(professorCoordenador, turma.professorCoordenador)
+                && Objects.equals(curso, turma.curso)
+                && Objects.equals(ativo, turma.ativo)
+                && alunos.equals(turma.alunos);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(identificador, professorCoordenador, curso, ativo, alunos);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("identificador", identificador)
+                .add("professor coordenador", professorCoordenador.getNome())
+                .add("curso", curso)
+                .add("ativo", ativo)
+                .add("alunos", alunos)
+                .toString();
+    }
+}
