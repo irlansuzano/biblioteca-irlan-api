@@ -1,12 +1,10 @@
 package br.edu.infnet.biblioteca_irlan_api.domain;
 
-import com.google.common.base.MoreObjects;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Professor extends Pessoa {
-    private String registroProfissional; //matricula do professor
+    private String registroProfissional;
     private Curso coordenacao;
 
     public Professor(String nome, String cpf, String email, LocalDate dataNascimento, String registroProfissional, Curso coordenacao) {
@@ -36,23 +34,19 @@ public class Professor extends Pessoa {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Professor professor = (Professor) o;
-        return Objects.equals(registroProfissional, professor.registroProfissional)
-                && Objects.equals(coordenacao, professor.coordenacao);
+        return Objects.equals(getId(), professor.getId()) && Objects.equals(registroProfissional, professor.registroProfissional);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), registroProfissional, coordenacao);
+        return Objects.hash(super.hashCode(), getId(), registroProfissional);
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("Nome", getNome())
-                .add("CPF", getCpf())
-                .add("Email", getEmail())
-                .add("Registro profissional", registroProfissional)
-                .add("Coordenacao", coordenacao)
-                .toString();
+        return String.format("Professor %s, registro profissional: %s, coordenacao: %s]",
+                getNome(),
+                registroProfissional,
+                coordenacao != null ? coordenacao.getNome() : "N/A");
     }
 }

@@ -1,7 +1,5 @@
 package br.edu.infnet.biblioteca_irlan_api.domain;
 
-import com.google.common.base.MoreObjects;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -61,6 +59,7 @@ public class Curso {
             throw new IllegalArgumentException("O coordenador não pode ser nulo!!!");
         }
         this.coordenador = coordenador;
+        coordenador.setCoordenacao(this);
     }
 
     public List<Turma> getTurmas() {
@@ -113,25 +112,17 @@ public class Curso {
         return ativo == curso.ativo
                 && Objects.equals(id, curso.id)
                 && Objects.equals(nome, curso.nome)
-                && Objects.equals(descricao, curso.descricao)
-                && Objects.equals(coordenador, curso.coordenador)
-                && Objects.equals(turmas, curso.turmas);
+                && Objects.equals(descricao, curso.descricao);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, descricao, ativo, coordenador, turmas);
+        return Objects.hash(id, nome, descricao);
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("id", id)
-                .add("nome", nome)
-                .add("descrição", descricao)
-                .add("ativo", ativo)
-                .add("coordenador", coordenador.getNome())
-                .add("turmas", turmas)
-                .toString();
+        return String.format("Curso %s, descricao: %s, %s, coordenador: %s, quantidade de turmas: %d}",
+                nome, descricao, ativo ? "ativo" : "inativo", coordenador.getNome(), turmas.size());
     }
 }

@@ -1,6 +1,6 @@
 package br.edu.infnet.biblioteca_irlan_api.domain;
 
-import com.google.common.base.MoreObjects;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public class Turma {
 
+    private Long id;
     private String identificador;
     private Professor professorCoordenador;
     private boolean ativo;
@@ -23,6 +24,14 @@ public class Turma {
         this.identificador = identificador;
         this.professorCoordenador = professorCoordenador;
         this.ativo = ativo;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getIdentificador() {
@@ -87,26 +96,22 @@ public class Turma {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Turma turma = (Turma) o;
-        return Objects.equals(identificador, turma.identificador)
-                && Objects.equals(professorCoordenador, turma.professorCoordenador)
-                && Objects.equals(curso, turma.curso)
-                && Objects.equals(ativo, turma.ativo)
-                && alunos.equals(turma.alunos);
+        return Objects.equals(id, turma.id)
+                && Objects.equals(identificador, turma.identificador)
+                && Objects.equals(professorCoordenador, turma.professorCoordenador);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(identificador, professorCoordenador, curso, ativo, alunos);
+        return Objects.hash(id, identificador, professorCoordenador);
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("identificador", identificador)
-                .add("professor coordenador", professorCoordenador.getNome())
-                .add("curso", curso)
-                .add("ativo", ativo)
-                .add("alunos", alunos)
-                .toString();
+        return String.format("Turma: %s, coordenador %s, %s, curso %s]",
+                identificador,
+                professorCoordenador != null ? professorCoordenador.getNome() : "N/A",
+                ativo ? "em atividade" : "inativo",
+                curso != null ? curso.getNome() : "N/A");
     }
 }

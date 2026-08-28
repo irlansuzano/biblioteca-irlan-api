@@ -3,10 +3,9 @@ package br.edu.infnet.biblioteca_irlan_api.domain;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
-
 public abstract class Pessoa {
 
+    private Long id;
     private String nome;
     private String cpf;
     private String email;
@@ -24,6 +23,14 @@ public abstract class Pessoa {
         this.dataNascimento = dataNascimento;
         this.ativo = true;
         this.dataCadastro = LocalDate.now();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -78,23 +85,17 @@ public abstract class Pessoa {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Pessoa pessoa = (Pessoa) o;
-        return ativo == pessoa.ativo && Objects.equals(nome, pessoa.nome) && Objects.equals(cpf, pessoa.cpf) && Objects.equals(email, pessoa.email) && Objects.equals(dataNascimento, pessoa.dataNascimento) && Objects.equals(dataCadastro, pessoa.dataCadastro);
+        return Objects.equals(id, pessoa.id) && Objects.equals(nome, pessoa.nome) && Objects.equals(cpf, pessoa.cpf);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nome, cpf, email, dataNascimento, ativo, dataCadastro);
+        return Objects.hash(id, nome, cpf);
     }
 
     @Override
     public String toString() {
-        return toStringHelper(this)
-                .add("nome", nome)
-                .add("cpf", cpf)
-                .add("email", email)
-                .add("dataNascimento", dataNascimento)
-                .add("ativo", ativo)
-                .add("dataCadastro", dataCadastro)
-                .toString();
+        return String.format("Pessoa - nome: %s, cpf: %s, email:%s, dataNascimento: %s, %b, data de Cadastro: %s}",
+                nome, cpf, email, dataNascimento, ativo ? "ativo" : "inativo", dataCadastro);
     }
 }
