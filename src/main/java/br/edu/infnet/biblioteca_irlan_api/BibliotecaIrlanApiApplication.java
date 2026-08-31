@@ -15,9 +15,9 @@ public class BibliotecaIrlanApiApplication {
 
 
         LocalDate dataNascimento = LocalDate.of(1997, 5, 20);
-        Aluno irlan = new Aluno("irlan", "123456789", "irlan123@gmail.com",
+        Aluno irlan = new Aluno(1L, "irlan", "123456789", "irlan123@gmail.com",
                 dataNascimento, "2021001", "A", null);
-        Professor professor = new Professor("Professor Luis", "987654321", "professor_luis123@gmail.com",
+        Professor professor = new Professor(2L,"Professor Luis", "987654321", "professor_luis123@gmail.com",
                 dataNascimento, "A123456", null);
 
         Curso curso = new Curso(1L, "Engenharia de Software", "Curso de Engenharia de Software",
@@ -33,7 +33,8 @@ public class BibliotecaIrlanApiApplication {
         aluguel.setId(1L);
         aluguel.setDataInicioAluguel(LocalDate.now());
         aluguel.setDataFimAluguel(LocalDate.now().plusDays(7));
-        aluguel.alugarLivro(senhorDosAneis, irlan);
+        aluguel.setLivro(senhorDosAneis);
+        aluguel.setAluno(irlan);
 
 
         System.out.println(irlan);

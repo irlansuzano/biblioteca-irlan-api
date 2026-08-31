@@ -7,8 +7,8 @@ public class Professor extends Pessoa {
     private String registroProfissional;
     private Curso coordenacao;
 
-    public Professor(String nome, String cpf, String email, LocalDate dataNascimento, String registroProfissional, Curso coordenacao) {
-        super(nome, cpf, email, dataNascimento);
+    public Professor(Long id, String nome, String cpf, String email, LocalDate dataNascimento, String registroProfissional, Curso coordenacao) {
+        super(id, nome, cpf, email, dataNascimento);
         this.registroProfissional = registroProfissional;
         this.coordenacao = coordenacao;
     }
@@ -44,7 +44,7 @@ public class Professor extends Pessoa {
 
     @Override
     public String toString() {
-        return String.format("Professor %s, registro profissional: %s, coordenacao: %s]",
+        return String.format("Professor %s, registro profissional: %s, coordenacao: %s",
                 getNome(),
                 registroProfissional,
                 coordenacao != null ? coordenacao.getNome() : "N/A");

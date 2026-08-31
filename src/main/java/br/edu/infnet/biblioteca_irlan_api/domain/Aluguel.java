@@ -1,24 +1,22 @@
 package br.edu.infnet.biblioteca_irlan_api.domain;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
-public class Aluguel {
+public class Aluguel implements Identificavel {
 
     private Long id;
     private LocalDate dataInicioAluguel;
     private LocalDate dataFimAluguel;
 
-    private List<Livro> livrosAlugados = new ArrayList<>();
+    private Livro livro;
 
     private Aluno aluno;
 
     public Aluguel() {
     }
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -43,12 +41,12 @@ public class Aluguel {
         this.dataFimAluguel = dataFimAluguel;
     }
 
-    public List<Livro> getLivrosAlugados() {
-        return Collections.unmodifiableList(livrosAlugados);
+    public Livro getLivro() {
+        return livro;
     }
 
-    public void setLivrosAlugados(List<Livro> livrosAlugados) {
-        this.livrosAlugados = livrosAlugados;
+    public void setLivro(Livro livro) {
+        this.livro = livro;
     }
 
     public Aluno getAluno() {
@@ -57,23 +55,6 @@ public class Aluguel {
 
     public void setAluno(Aluno aluno) {
         this.aluno = aluno;
-    }
-
-    private String obterTitulosLivrosAlugados() {
-        if (livrosAlugados == null || livrosAlugados.isEmpty()) {
-            return "nenhum livro alugado";
-        }
-        return livrosAlugados.stream().map(Livro::getTitulo)
-                .collect(java.util.stream.Collectors.joining(", "));
-    }
-
-    public void alugarLivro(Livro livro, Aluno aluno) {
-        validarSeAluguelValido(livro, aluno);
-
-        this.livrosAlugados.add(livro);
-        this.aluno = aluno;
-        aluno.addAluguel(this);
-        livro.addAluguel(this);
     }
 
     private void validarSeAluguelValido(Livro livro, Aluno aluno) {
@@ -92,17 +73,17 @@ public class Aluguel {
         return Objects.equals(id, aluguel.id)
                 && Objects.equals(dataInicioAluguel, aluguel.dataInicioAluguel)
                 && Objects.equals(dataFimAluguel, aluguel.dataFimAluguel)
-                && Objects.equals(livrosAlugados, aluguel.livrosAlugados)
+                && Objects.equals(livro, aluguel.livro)
                 && Objects.equals(aluno, aluguel.aluno);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, dataInicioAluguel, dataFimAluguel, livrosAlugados, aluno);
+        return Objects.hash(id, dataInicioAluguel, dataFimAluguel, livro, aluno);
     }
 
     @Override
     public String toString() {
-        return String.format("Aluguel do(s) Livro(s) %s feito pelo Aluno %s. Alugado de %s até %s", obterTitulosLivrosAlugados(), aluno.getNome(), dataInicioAluguel, dataFimAluguel);
+        return String.format("Aluguel do Livro %s feito pelo Aluno %s. Alugado de %s até %s", livro.getTitulo(), aluno.getNome(), dataInicioAluguel, dataFimAluguel);
     }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Livro {
+public class Livro implements Identificavel {
     private Long id;
     private String titulo;
     private String autor;
@@ -20,6 +20,7 @@ public class Livro {
         this.autor = autor;
     }
 
+    @Override
     public Long getId() {
         return id;
     }

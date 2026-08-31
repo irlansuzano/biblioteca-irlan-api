@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Curso {
+public class Curso implements Identificavel{
     private Long id;
     private String nome;
     private String descricao;
@@ -26,6 +26,7 @@ public class Curso {
         this.ativo = true;
     }
 
+    @Override
     public Long getId() {
         return id;
     }

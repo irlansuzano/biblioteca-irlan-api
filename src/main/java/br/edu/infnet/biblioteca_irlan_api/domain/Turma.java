@@ -1,13 +1,11 @@
 package br.edu.infnet.biblioteca_irlan_api.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Turma {
+public class Turma implements Identificavel{
 
     private Long id;
     private String identificador;
@@ -26,6 +24,7 @@ public class Turma {
         this.ativo = ativo;
     }
 
+    @Override
     public Long getId() {
         return id;
     }

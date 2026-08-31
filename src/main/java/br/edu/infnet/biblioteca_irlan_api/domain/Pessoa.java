@@ -3,7 +3,7 @@ package br.edu.infnet.biblioteca_irlan_api.domain;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public abstract class Pessoa {
+public abstract class Pessoa implements Identificavel {
 
     private Long id;
     private String nome;
@@ -16,7 +16,8 @@ public abstract class Pessoa {
     protected Pessoa() {
     }
 
-    protected Pessoa(String nome, String cpf, String email, LocalDate dataNascimento) {
+    protected Pessoa(Long id, String nome, String cpf, String email, LocalDate dataNascimento) {
+        this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
@@ -25,6 +26,7 @@ public abstract class Pessoa {
         this.dataCadastro = LocalDate.now();
     }
 
+    @Override
     public Long getId() {
         return id;
     }
