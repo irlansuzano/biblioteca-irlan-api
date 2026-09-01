@@ -34,12 +34,12 @@ public class ProfessorService extends BaseService<Professor> {
         this.alterar(professor);
     }
 
-    public void obterProfessorPorRegistroProfissional(String registroProfissional) {
+    public Professor obterProfessorPorRegistroProfissional(String registroProfissional) {
         if (registroProfissional == null || registroProfissional.isEmpty()) {
             throw new IllegalArgumentException("Registro profissional inválido.");
         }
         Collection<Professor> professores = this.obterLista();
-        professores.stream().filter(professor ->
+        return professores.stream().filter(professor ->
                         professor.getRegistroProfissional().equals(registroProfissional)).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Não foi encontrado Professor com o registro profissional " + registroProfissional));
     }

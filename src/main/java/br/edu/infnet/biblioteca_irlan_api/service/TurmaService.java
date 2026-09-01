@@ -53,4 +53,11 @@ public class TurmaService extends BaseService<Turma> {
     public void alterarTurma(Turma turma) {
         this.alterar(turma);
     }
+
+    public boolean obterTurmaPorIdentificador(String identificador) {
+        return this.obterLista().stream()
+                .filter(turma -> turma.getIdentificador().equals(identificador))
+                .findFirst()
+                .orElse(null) != null;
+    }
 }

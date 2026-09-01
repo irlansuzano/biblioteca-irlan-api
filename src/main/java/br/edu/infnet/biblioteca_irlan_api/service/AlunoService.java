@@ -34,10 +34,19 @@ public class AlunoService extends BaseService<Aluno> {
         this.alterar(aluno);
     }
 
+    public Aluno obterAlunoPorMatricula(String matricula) {
+        return this.obterLista().stream()
+                .filter(aluno -> aluno.getMatricula().equals(matricula))
+                .findFirst()
+                .orElse(null);
+    }
+
     private boolean isAlunoExistente(Long idAluno) {
         if (!obterLista().contains(idAluno)) {
             return false;
         }
         return true;
     }
+
+
 }
