@@ -1,12 +1,17 @@
 package br.edu.infnet.biblioteca_irlan_api.service;
 
 import br.edu.infnet.biblioteca_irlan_api.domain.Aluno;
+import br.edu.infnet.biblioteca_irlan_api.repository.AlunoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 @Service
-public class AlunoService extends BaseService<Aluno> {
+public class AlunoService extends BaseService<Aluno, AlunoRepository> {
+
+    public AlunoService(AlunoRepository repository) {
+        super(repository);
+    }
 
     public Aluno obterAlunoPorId(Long id) {
         return this.obterPorId(id);
@@ -17,7 +22,7 @@ public class AlunoService extends BaseService<Aluno> {
     }
 
     public void cadastrarAluno(Aluno aluno) {
-        if(isAlunoExistente(aluno.getId())){
+        if(aluno.getId() != null && isAlunoExistente(aluno.getId())){
             throw new IllegalArgumentException("Aluno já cadastrado.");
         }
         this.incluir(aluno);
@@ -38,17 +43,12 @@ public class AlunoService extends BaseService<Aluno> {
     }
 
     public Aluno obterAlunoPorMatricula(String matricula) {
-        return this.obterLista().stream()
-                .filter(aluno -> aluno.getMatricula().equals(matricula))
-                .findFirst()
+        return repository.findByMatricula(matricula)
                 .orElseThrow(() -> new IllegalArgumentException("Aluno não encontrado com a matrícula: " + matricula));
     }
 
     private boolean isAlunoExistente(Long idAluno) {
-        if (!obterLista().contains(idAluno)) {
-            return false;
-        }
-        return true;
+        return repository.existsById(idAluno);
     }
 
 

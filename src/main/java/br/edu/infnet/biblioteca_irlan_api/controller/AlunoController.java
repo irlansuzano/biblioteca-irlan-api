@@ -4,6 +4,7 @@ import br.edu.infnet.biblioteca_irlan_api.domain.Aluno;
 import br.edu.infnet.biblioteca_irlan_api.service.AlunoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,14 +44,15 @@ public class AlunoController {
 
     @PostMapping
     @Operation(summary = "Cadastrar aluno", description = "Cria um novo registro de aluno no sistema")
-    public ResponseEntity<Aluno> cadastrarAluno(@RequestBody Aluno aluno) {
+    public ResponseEntity<Aluno> cadastrarAluno(@Valid @RequestBody Aluno aluno) {
         alunoService.cadastrarAluno(aluno);
         return ResponseEntity.status(CREATED).body(aluno);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Operation(summary = "Alterar aluno", description = "Atualiza os dados de um aluno existente")
-    public ResponseEntity<Aluno> alterarAluno(@RequestBody Aluno aluno) {
+    public ResponseEntity<Aluno> alterarAluno(@PathVariable Long id, @Valid @RequestBody Aluno aluno) {
+        aluno.setId(id);
         alunoService.alterarAluno(aluno);
         return ResponseEntity.ok(aluno);
     }

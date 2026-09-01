@@ -4,6 +4,7 @@ import br.edu.infnet.biblioteca_irlan_api.domain.Aluguel;
 import br.edu.infnet.biblioteca_irlan_api.service.AluguelService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,17 @@ public class AluguelController {
 
     @GetMapping
     @Operation(summary = "Listar todos os aluguéis", description = "Retorna uma lista de todos os registros de aluguéis")
-    public ResponseEntity<List<Aluguel>> obterAlugueis() {
+    public ResponseEntity<List<Aluguel>> obterAlugueis(
+            @RequestParam(required = false) Long idLivro,
+            @RequestParam(required = false) Long idAluno) {
+        
+        if (idLivro != null) {
+            return ResponseEntity.ok(aluguelService.buscarAlugueisPorLivro(idLivro));
+        }
+        if (idAluno != null) {
+            return ResponseEntity.ok(aluguelService.buscarAlugueisPorAluno(idAluno));
+        }
+        
         return ResponseEntity.ok(aluguelService.obterLista().stream().toList());
     }
 
@@ -48,14 +59,14 @@ public class AluguelController {
 
     @PostMapping("/alugar")
     @Operation(summary = "Registrar novo aluguel", description = "Cria um novo registro de aluguel de livro")
-    public ResponseEntity<Aluguel> alugar(@RequestBody Aluguel aluguel) {
+    public ResponseEntity<Aluguel> alugar(@Valid @RequestBody Aluguel aluguel) {
         aluguelService.alugar(aluguel);
         return ResponseEntity.status(CREATED).body(aluguel);
     }
 
     @PutMapping("/{id}/alterar")
     @Operation(summary = "Alterar livro de um aluguel", description = "Atualiza o livro associado a um aluguel existente")
-    public ResponseEntity<Aluguel> alterarLivroAlugado(@PathVariable Long id, @RequestParam Long idLivroAtual, @RequestBody Aluguel aluguelAlterado) {
+    public ResponseEntity<Aluguel> alterarLivroAlugado(@PathVariable Long id, @RequestParam Long idLivroAtual, @Valid @RequestBody Aluguel aluguelAlterado) {
         aluguelService.alterarLivroAlugado(idLivroAtual, aluguelAlterado.getLivro());
         return ResponseEntity.ok(aluguelAlterado);
     }

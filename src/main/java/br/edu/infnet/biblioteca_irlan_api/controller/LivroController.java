@@ -4,6 +4,7 @@ import br.edu.infnet.biblioteca_irlan_api.domain.Livro;
 import br.edu.infnet.biblioteca_irlan_api.service.LivroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,14 +43,14 @@ public class LivroController {
 
     @PostMapping
     @Operation(summary = "Incluir livro", description = "Cria um novo registro de livro no sistema")
-    public ResponseEntity<Livro> incluirLivro(@RequestBody Livro livro) {
+    public ResponseEntity<Livro> incluirLivro(@Valid @RequestBody Livro livro) {
         livroService.incluir(livro);
         return ResponseEntity.status(CREATED).body(livro);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Alterar livro", description = "Atualiza os dados de um livro existente")
-    public ResponseEntity<Livro> alterarLivro(@PathVariable Long id, @RequestBody Livro livro) {
+    public ResponseEntity<Livro> alterarLivro(@PathVariable Long id, @Valid @RequestBody Livro livro) {
         livroService.alterarLivro(id, livro);
         return ResponseEntity.ok(livro);
     }

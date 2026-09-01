@@ -4,6 +4,7 @@ import br.edu.infnet.biblioteca_irlan_api.domain.Curso;
 import br.edu.infnet.biblioteca_irlan_api.service.CursoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,14 +44,14 @@ public class CursoController {
 
     @PostMapping
     @Operation(summary = "Incluir curso", description = "Cria um novo registro de curso no sistema")
-    public ResponseEntity<Curso> incluirCurso(@RequestBody Curso curso) {
+    public ResponseEntity<Curso> incluirCurso(@Valid @RequestBody Curso curso) {
         cursoService.incluir(curso);
         return ResponseEntity.status(CREATED).body(curso);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Alterar curso", description = "Atualiza os dados de um curso existente")
-    public ResponseEntity<Curso> alterarCurso(@PathVariable Long id, @RequestBody Curso curso) {
+    public ResponseEntity<Curso> alterarCurso(@PathVariable Long id, @Valid @RequestBody Curso curso) {
         cursoService.alterarCurso(id, curso);
         return ResponseEntity.ok(curso);
     }

@@ -5,6 +5,7 @@ import br.edu.infnet.biblioteca_irlan_api.domain.Turma;
 import br.edu.infnet.biblioteca_irlan_api.service.TurmaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,14 +51,15 @@ public class TurmaController {
 
     @PostMapping
     @Operation(summary = "Cadastrar turma", description = "Cria um novo registro de turma no sistema")
-    public ResponseEntity<Turma> cadastrarTurma(@RequestBody Turma turma) {
+    public ResponseEntity<Turma> cadastrarTurma(@Valid @RequestBody Turma turma) {
         turmaService.cadastrarTurma(turma);
         return ResponseEntity.status(CREATED).body(turma);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Operation(summary = "Alterar turma", description = "Atualiza os dados de uma turma existente")
-    public ResponseEntity<Turma> alterarTurma(@RequestBody Turma turma) {
+    public ResponseEntity<Turma> alterarTurma(@PathVariable Long id, @Valid @RequestBody Turma turma) {
+        turma.setId(id);
         turmaService.alterarTurma(turma);
         return ResponseEntity.ok(turma);
     }

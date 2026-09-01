@@ -1,20 +1,35 @@
 package br.edu.infnet.biblioteca_irlan_api.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "aluguel")
 public class Aluguel implements Identificavel {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(name = "data_inicio_aluguel")
     private LocalDate dataInicioAluguel;
+    
+    @Column(name = "data_fim_aluguel")
     private LocalDate dataFimAluguel;
+    
+    @Column(name = "is_ativo")
     private Boolean isAtivo;
 
+    @ManyToOne
+    @JoinColumn(name = "id_livro")
     private Livro livro;
 
-    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "id_aluno")
+    @JsonBackReference
     private Aluno aluno;
 
     public Aluguel() {

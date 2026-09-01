@@ -1,14 +1,34 @@
 package br.edu.infnet.biblioteca_irlan_api.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "livro")
 public class Livro implements Identificavel {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @NotBlank(message = "O título é obrigatório")
+    @Size(min = 1, max = 200, message = "O título deve ter entre 1 e 200 caracteres")
+    @Column(name = "titulo")
     private String titulo;
+    
+    @NotBlank(message = "O autor é obrigatório")
+    @Size(min = 2, max = 150, message = "O autor deve ter entre 2 e 150 caracteres")
+    @Column(name = "autor")
     private String autor;
 
+    @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Aluguel> alugueis = new ArrayList<>();
 
     public Livro() {

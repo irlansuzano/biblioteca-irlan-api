@@ -1,18 +1,41 @@
 package br.edu.infnet.biblioteca_irlan_api.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "curso")
 public class Curso implements Identificavel{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @NotBlank(message = "O nome do curso é obrigatório")
+    @Size(min = 3, max = 100, message = "O nome do curso deve ter entre 3 e 100 caracteres")
+    @Column(name = "nome")
     private String nome;
+    
+    @NotBlank(message = "A descrição é obrigatória")
+    @Size(min = 10, max = 500, message = "A descrição deve ter entre 10 e 500 caracteres")
+    @Column(name = "descricao")
     private String descricao;
+    
+    @Column(name = "ativo")
     private boolean ativo;
 
+    @OneToOne
+    @JoinColumn(name = "id_coordenador")
     private Professor coordenador;
 
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Turma> turmas = new ArrayList<>();
 
     public Curso() {

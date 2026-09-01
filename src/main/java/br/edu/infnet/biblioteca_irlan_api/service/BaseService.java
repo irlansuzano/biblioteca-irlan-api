@@ -2,47 +2,50 @@ package br.edu.infnet.biblioteca_irlan_api.service;
 
 import br.edu.infnet.biblioteca_irlan_api.domain.Identificavel;
 import br.edu.infnet.biblioteca_irlan_api.exception.RecursoNaoEncontradoException;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
-public abstract class BaseService<T extends Identificavel> {
+public abstract class BaseService<T extends Identificavel, R extends JpaRepository<T, Long>> {
 
-    private final Map<Long, T> dados = new LinkedHashMap<>();
+    protected final R repository;
+
+    protected BaseService(R repository) {
+        this.repository = repository;
+    }
 
     public void incluir(T objeto) {
-        dados.put(objeto.getId(), objeto);
+        repository.save(objeto);
     }
 
     public void alterar(T objeto) {
-        incluir(objeto);
+        repository.save(objeto);
     }
 
     public void excluir(Long id) {
-        dados.remove(id);
+        validarExistencia(id);
+        repository.deleteById(id);
     }
 
     public T buscarPorId(Long id) {
-        validarExistencia(id);
-        return dados.get(id);
+        return repository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Recurso não encontrado com o ID " + id));
     }
 
     public Collection<T> obterLista() {
-        return dados.values();
+        return repository.findAll();
     }
 
     public T obterPorId(Long id) {
-        validarExistencia(id);
-        return dados.get(id);
+        return buscarPorId(id);
     }
 
-    private void validarExistencia(Long id) {
+    protected void validarExistencia(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("O ID não pode ser nulo.");
         }
 
-        if (!dados.containsKey(id)) {
+        if (!repository.existsById(id)) {
             throw new RecursoNaoEncontradoException("Recurso não encontrado com o ID " + id);
         }
     }

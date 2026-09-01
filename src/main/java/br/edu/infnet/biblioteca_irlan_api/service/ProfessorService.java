@@ -1,12 +1,17 @@
 package br.edu.infnet.biblioteca_irlan_api.service;
 
 import br.edu.infnet.biblioteca_irlan_api.domain.Professor;
+import br.edu.infnet.biblioteca_irlan_api.repository.ProfessorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 @Service
-public class ProfessorService extends BaseService<Professor> {
+public class ProfessorService extends BaseService<Professor, ProfessorRepository> {
+
+    public ProfessorService(ProfessorRepository repository) {
+        super(repository);
+    }
 
     public Professor obterProfessorPorId(Long id) {
         return this.obterPorId(id);
@@ -17,7 +22,7 @@ public class ProfessorService extends BaseService<Professor> {
     }
 
     public void cadastrarProfessor(Professor professor) {
-        if(isProfessorExistente(professor.getId())) {
+        if(professor.getId() != null && isProfessorExistente(professor.getId())) {
             throw new IllegalArgumentException("Cadastro do Professor já existe.");
         }
         this.incluir(professor);
@@ -41,13 +46,11 @@ public class ProfessorService extends BaseService<Professor> {
         if (registroProfissional == null || registroProfissional.isEmpty()) {
             throw new IllegalArgumentException("Registro profissional inválido.");
         }
-        Collection<Professor> professores = this.obterLista();
-        return professores.stream().filter(professor ->
-                        professor.getRegistroProfissional().equals(registroProfissional)).findFirst()
+        return repository.findByRegistroProfissional(registroProfissional)
                 .orElseThrow(() -> new IllegalArgumentException("Não foi encontrado Professor com o registro profissional " + registroProfissional));
     }
 
     public boolean isProfessorExistente(Long idProfessor){
-        return this.obterLista().stream().anyMatch(professor -> professor.getId().equals(idProfessor));
+        return repository.existsById(idProfessor);
     }
 }

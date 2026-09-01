@@ -1,18 +1,43 @@
 package br.edu.infnet.biblioteca_irlan_api.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "turma")
 public class Turma implements Identificavel{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @NotBlank(message = "O identificador da turma é obrigatório")
+    @Size(min = 2, max = 50, message = "O identificador deve ter entre 2 e 50 caracteres")
+    @Column(name = "identificador")
     private String identificador;
+    
+    @ManyToOne
+    @JoinColumn(name = "id_professor_coordenador")
     private Professor professorCoordenador;
+    
+    @Column(name = "ativo")
     private boolean ativo;
 
+    @ManyToOne
+    @JoinColumn(name = "id_curso")
+    @JsonBackReference
     private Curso curso;
+    
+    @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Aluno> alunos = new ArrayList<>();
 
     public Turma() {

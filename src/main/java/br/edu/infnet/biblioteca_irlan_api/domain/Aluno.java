@@ -1,24 +1,42 @@
 package br.edu.infnet.biblioteca_irlan_api.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "aluno")
 public class Aluno extends Pessoa {
 
+    @NotBlank(message = "A matrícula é obrigatória")
+    @Size(min = 5, max = 20, message = "A matrícula deve ter entre 5 e 20 caracteres")
+    @Column(name = "matricula")
     private String matricula;
 
+    @ManyToOne
+    @JoinColumn(name = "id_turma")
+    @JsonBackReference
     private Turma turma;
 
-    @JsonBackReference
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Aluguel> alugueis = new ArrayList<>();
 
     public Aluno(Long id, String nome, String cpf, String email, LocalDate dataNascimento, String matricula, String turma, Curso curso) {
         super(id, nome, cpf, email, dataNascimento);
         this.matricula = matricula;
+    }
+
+    public Aluno() {
+
     }
 
     public List<Aluguel> getAlugueis() {

@@ -4,6 +4,7 @@ import br.edu.infnet.biblioteca_irlan_api.domain.Professor;
 import br.edu.infnet.biblioteca_irlan_api.service.ProfessorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,14 +43,15 @@ public class ProfessorController {
 
     @PostMapping
     @Operation(summary = "Cadastrar professor", description = "Cria um novo registro de professor no sistema")
-    public ResponseEntity<Professor> cadastrarProfessor(@RequestBody Professor professor) {
+    public ResponseEntity<Professor> cadastrarProfessor(@Valid @RequestBody Professor professor) {
         professorService.cadastrarProfessor(professor);
         return ResponseEntity.status(CREATED).body(professor);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Operation(summary = "Alterar professor", description = "Atualiza os dados de um professor existente")
-    public ResponseEntity<Professor> alterarProfessor(@RequestBody Professor professor) {
+    public ResponseEntity<Professor> alterarProfessor(@PathVariable Long id, @Valid @RequestBody Professor professor) {
+        professor.setId(id);
         professorService.alterarProfessor(professor);
         return ResponseEntity.ok(professor);
     }

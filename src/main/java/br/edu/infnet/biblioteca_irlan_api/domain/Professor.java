@@ -1,11 +1,28 @@
 package br.edu.infnet.biblioteca_irlan_api.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "professor")
 public class Professor extends Pessoa {
+    
+    @NotBlank(message = "O registro profissional é obrigatório")
+    @Size(min = 3, max = 50, message = "O registro profissional deve ter entre 3 e 50 caracteres")
+    @Column(name = "registro_profissional")
     private String registroProfissional;
+    
+    @OneToOne(mappedBy = "coordenador")
+    @JsonIgnore
     private Curso coordenacao;
+
+    public Professor() {
+    }
 
     public Professor(Long id, String nome, String cpf, String email, LocalDate dataNascimento, String registroProfissional, Curso coordenacao) {
         super(id, nome, cpf, email, dataNascimento);

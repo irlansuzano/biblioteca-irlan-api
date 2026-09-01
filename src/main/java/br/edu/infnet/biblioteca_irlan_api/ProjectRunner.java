@@ -46,22 +46,22 @@ public class ProjectRunner implements CommandLineRunner {
         Random random = new Random();
         LocalDate dataNascimento = LocalDate.of(1997, 5, 20);
 
-        Aluno irlan = registrarAluno(1L, "Irlan", dataNascimento);
-        Aluno brenda = registrarAluno(2L, "Brenda", dataNascimento);
-        Aluno jose = registrarAluno(3L, "Jose", dataNascimento);
+        Aluno irlan = registrarAluno(null, "Irlan", dataNascimento);
+        Aluno brenda = registrarAluno(null, "Brenda", dataNascimento);
+        Aluno jose = registrarAluno(null, "Jose", dataNascimento);
 
 
-        Professor professor = registrarProfessor(1L, "professor luis", dataNascimento);
-        Professor professor2 = registrarProfessor(2L, "professor maria", dataNascimento);
-        Professor professor3 = registrarProfessor(3L, "professor joao", dataNascimento);
+        Professor professor = registrarProfessor(null, "professor luis", dataNascimento);
+        Professor professor2 = registrarProfessor(null, "professor maria", dataNascimento);
+        Professor professor3 = registrarProfessor(null, "professor joao", dataNascimento);
 
-        Curso curso = registrarCurso(1L, "adm",professor);
-        Curso curso2 = registrarCurso(2L, "engenharia", professor2);
-        Curso curso3 = registrarCurso(3L, "odonto", professor3);
+        Curso curso = registrarCurso(null, "adm",professor);
+        Curso curso2 = registrarCurso(null, "engenharia", professor2);
+        Curso curso3 = registrarCurso(null, "odonto", professor3);
 
-        Turma turma = registrarTurma(1L,"1-2026-A", professor);
-        Turma turma2 = registrarTurma(2L,"2-2026-A", professor2);
-        Turma turma3 = registrarTurma(3L,"3-2026-A", professor3);
+        Turma turma = registrarTurma(null,"1-2026-A", professor);
+        Turma turma2 = registrarTurma(null,"2-2026-A", professor2);
+        Turma turma3 = registrarTurma(null,"3-2026-A", professor3);
 
 
         turma.adicionarAluno(irlan);
@@ -71,15 +71,15 @@ public class ProjectRunner implements CommandLineRunner {
         curso2.adicionarTurma(turma2);
         curso3.adicionarTurma(turma3);
 
-        Livro senhorDosAneis = new Livro(1L, "Senhor dos Anéis", "J.R.R. Tolkien");
-        Livro cronicasGeloFogo = new Livro(2L, "Cronicas de Gelo e Fogo", "George R. R. Martin");
+        Livro senhorDosAneis = new Livro(null, "Senhor dos Anéis", "J.R.R. Tolkien");
+        Livro cronicasGeloFogo = new Livro(null, "Cronicas de Gelo e Fogo", "George R. R. Martin");
 
         Aluguel aluguel = new Aluguel();
-        preencherAluguel(1L, aluguel, senhorDosAneis, irlan);
+        preencherAluguel(null, aluguel, senhorDosAneis, irlan);
 
 
         Aluguel aluguel2 = new Aluguel();
-        preencherAluguel(2L, aluguel2, cronicasGeloFogo, irlan);
+        preencherAluguel(null, aluguel2, cronicasGeloFogo, irlan);
 
         alunoService.cadastrarAluno(irlan);
         alunoService.cadastrarAluno(brenda);
