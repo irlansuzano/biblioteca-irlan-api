@@ -1,6 +1,10 @@
 package br.edu.infnet.biblioteca_irlan_api.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Aluno extends Pessoa {
@@ -9,19 +13,20 @@ public class Aluno extends Pessoa {
 
     private Turma turma;
 
-    private Aluguel aluguel;
+    @JsonBackReference
+    private List<Aluguel> alugueis = new ArrayList<>();
 
     public Aluno(Long id, String nome, String cpf, String email, LocalDate dataNascimento, String matricula, String turma, Curso curso) {
         super(id, nome, cpf, email, dataNascimento);
         this.matricula = matricula;
     }
 
-    public Aluguel getAluguel() {
-        return aluguel;
+    public List<Aluguel> getAlugueis() {
+        return alugueis;
     }
 
-    public void setAluguel(Aluguel aluguel) {
-        this.aluguel = aluguel;
+    public void setAlugueis(List<Aluguel> alugueis) {
+        this.alugueis = alugueis;
     }
 
     public String getMatricula() {

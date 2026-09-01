@@ -1,5 +1,7 @@
 package br.edu.infnet.biblioteca_irlan_api.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -12,6 +14,7 @@ public class Aluguel implements Identificavel {
 
     private Livro livro;
 
+    @JsonManagedReference
     private Aluno aluno;
 
     public Aluguel() {
