@@ -1,7 +1,9 @@
 package br.edu.infnet.biblioteca_irlan_api.service;
 
 import br.edu.infnet.biblioteca_irlan_api.domain.Curso;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CursoService extends BaseService<Curso> {
 
     public void alterarCurso(Long idCurso, Curso cursoAlterado){
@@ -20,7 +22,7 @@ public class CursoService extends BaseService<Curso> {
     public Curso buscarCursoPorNome(String nome){
         return this.obterLista().stream()
                 .filter(curso -> curso.getNome().equals(nome))
-                .findFirst().orElse(null);
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("não existe curso com o nome " + nome));
     }
 
     public boolean isCursoExistente(Long idCurso){

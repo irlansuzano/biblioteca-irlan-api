@@ -2,11 +2,13 @@ package br.edu.infnet.biblioteca_irlan_api.service;
 
 import br.edu.infnet.biblioteca_irlan_api.domain.Aluguel;
 import br.edu.infnet.biblioteca_irlan_api.domain.Livro;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
+@Service
 public class AluguelService extends BaseService<Aluguel> {
 
     public void alugar(Aluguel aluguel) {
@@ -78,5 +80,9 @@ public class AluguelService extends BaseService<Aluguel> {
                 .append(aluguel.getDataFimAluguel())
                 .append("\n"));
         return sb.toString();
+    }
+
+    public void devolver(Long id) {
+
     }
 }

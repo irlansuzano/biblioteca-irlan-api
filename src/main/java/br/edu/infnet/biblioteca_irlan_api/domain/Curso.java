@@ -123,7 +123,7 @@ public class Curso implements Identificavel{
 
     @Override
     public String toString() {
-        return String.format("Curso %s, descricao: %s, %s, coordenador: %s, quantidade de turmas: %d}",
+        return String.format("Curso %s, descricao: %s, %s, coordenador: %s, quantidade de turmas: %d",
                 nome, descricao, ativo ? "ativo" : "inativo", coordenador.getNome(), turmas.size());
     }
 }

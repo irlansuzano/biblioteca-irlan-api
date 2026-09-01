@@ -2,9 +2,12 @@ package br.edu.infnet.biblioteca_irlan_api.service;
 
 import br.edu.infnet.biblioteca_irlan_api.domain.Aluno;
 import br.edu.infnet.biblioteca_irlan_api.domain.Turma;
+import org.springframework.stereotype.Service;
+
 import java.util.Collection;
 import java.util.List;
 
+@Service
 public class TurmaService extends BaseService<Turma> {
 
     public Collection<Turma> obterTurmas() {
@@ -54,10 +57,10 @@ public class TurmaService extends BaseService<Turma> {
         this.alterar(turma);
     }
 
-    public boolean obterTurmaPorIdentificador(String identificador) {
+    public Turma obterTurmaPorIdentificador(String identificador) {
         return this.obterLista().stream()
                 .filter(turma -> turma.getIdentificador().equals(identificador))
                 .findFirst()
-                .orElse(null) != null;
+                .orElseThrow(() -> new IllegalArgumentException("Turma não encontrada com o identificador: " + identificador));
     }
 }

@@ -1,8 +1,11 @@
 package br.edu.infnet.biblioteca_irlan_api.service;
 
 import br.edu.infnet.biblioteca_irlan_api.domain.Professor;
+import org.springframework.stereotype.Service;
+
 import java.util.Collection;
 
+@Service
 public class ProfessorService extends BaseService<Professor> {
 
     public Professor obterProfessorPorId(Long id) {

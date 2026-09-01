@@ -18,7 +18,8 @@ public class Turma implements Identificavel{
     public Turma() {
     }
 
-    public Turma(String identificador, Professor professorCoordenador, boolean ativo) {
+    public Turma(Long id, String identificador, Professor professorCoordenador, boolean ativo) {
+        this.id = id;
         this.identificador = identificador;
         this.professorCoordenador = professorCoordenador;
         this.ativo = ativo;
@@ -107,7 +108,7 @@ public class Turma implements Identificavel{
 
     @Override
     public String toString() {
-        return String.format("Turma: %s, coordenador %s, %s, curso %s]",
+        return String.format("Turma: %s, coordenador %s, %s, curso %s",
                 identificador,
                 professorCoordenador != null ? professorCoordenador.getNome() : "N/A",
                 ativo ? "em atividade" : "inativo",

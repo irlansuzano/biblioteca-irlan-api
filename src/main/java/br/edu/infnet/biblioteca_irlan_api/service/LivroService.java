@@ -1,7 +1,9 @@
 package br.edu.infnet.biblioteca_irlan_api.service;
 
 import br.edu.infnet.biblioteca_irlan_api.domain.Livro;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LivroService extends BaseService<Livro> {
 
     public void alterarLivro(Long idLivro, Livro livroAlterado){
@@ -20,7 +22,7 @@ public class LivroService extends BaseService<Livro> {
     public Livro buscarLivroPorTitulo(String titulo){
         return this.obterLista().stream()
                 .filter(livro -> livro.getTitulo().equals(titulo))
-                .findFirst().orElse(null);
+                .findFirst().orElseThrow(() -> new IllegalArgumentException("Livro não encontrado com o título: " + titulo));
     }
 
 

@@ -55,7 +55,7 @@ public class Aluno extends Pessoa {
 
     @Override
     public String toString() {
-        return String.format("Aluno %s, cpf: %s, email: %s, matricula: %s, turma: %s}",
+        return String.format("Aluno %s, cpf: %s, email: %s, matricula: %s, turma: %s",
                 getNome(), getCpf(), getEmail(), matricula, turma.getIdentificador());
     }
 }
