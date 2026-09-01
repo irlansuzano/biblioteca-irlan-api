@@ -28,14 +28,14 @@ public class AluguelController {
     public ResponseEntity<List<Aluguel>> obterAlugueis(
             @RequestParam(required = false) Long idLivro,
             @RequestParam(required = false) Long idAluno) {
-        
+
         if (idLivro != null) {
             return ResponseEntity.ok(aluguelService.buscarAlugueisPorLivro(idLivro));
         }
         if (idAluno != null) {
             return ResponseEntity.ok(aluguelService.buscarAlugueisPorAluno(idAluno));
         }
-        
+
         return ResponseEntity.ok(aluguelService.obterLista().stream().toList());
     }
 
@@ -47,13 +47,13 @@ public class AluguelController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Obter aluguel por ID", description = "Retorna os detalhes de um aluguel específico através do seu identificador")
-    public ResponseEntity<Aluguel> obterAluguelPorId(@PathVariable Long id){
+    public ResponseEntity<Aluguel> obterAluguelPorId(@PathVariable Long id) {
         return ResponseEntity.ok(aluguelService.obterPorId(id));
     }
 
     @GetMapping("/livro")
     @Operation(summary = "Obter aluguel por ID do Livro", description = "Busca o registro de aluguel associado a um livro específico")
-    public ResponseEntity<Aluguel> obterAluguelPorLivro(@RequestParam Long idLivro){
+    public ResponseEntity<Aluguel> obterAluguelPorLivro(@RequestParam Long idLivro) {
         return ResponseEntity.ok(aluguelService.buscarAluguelPorLivro(idLivro));
     }
 

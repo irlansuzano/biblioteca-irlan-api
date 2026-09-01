@@ -13,13 +13,13 @@ public class Aluguel implements Identificavel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(name = "data_inicio_aluguel")
     private LocalDate dataInicioAluguel;
-    
+
     @Column(name = "data_fim_aluguel")
     private LocalDate dataFimAluguel;
-    
+
     @Column(name = "is_ativo")
     private Boolean isAtivo;
 

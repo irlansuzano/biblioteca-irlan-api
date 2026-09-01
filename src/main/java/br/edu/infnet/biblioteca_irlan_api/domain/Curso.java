@@ -12,21 +12,21 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "curso")
-public class Curso implements Identificavel{
+public class Curso implements Identificavel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @NotBlank(message = "O nome do curso é obrigatório")
     @Size(min = 3, max = 100, message = "O nome do curso deve ter entre 3 e 100 caracteres")
     @Column(name = "nome")
     private String nome;
-    
+
     @NotBlank(message = "A descrição é obrigatória")
     @Size(min = 10, max = 500, message = "A descrição deve ter entre 10 e 500 caracteres")
     @Column(name = "descricao")
     private String descricao;
-    
+
     @Column(name = "ativo")
     private boolean ativo;
 

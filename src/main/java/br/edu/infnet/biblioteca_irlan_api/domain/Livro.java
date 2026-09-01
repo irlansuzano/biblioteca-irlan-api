@@ -12,16 +12,16 @@ import java.util.Objects;
 @Entity
 @Table(name = "livro")
 public class Livro implements Identificavel {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @NotBlank(message = "O título é obrigatório")
     @Size(min = 1, max = 200, message = "O título deve ter entre 1 e 200 caracteres")
     @Column(name = "titulo")
     private String titulo;
-    
+
     @NotBlank(message = "O autor é obrigatório")
     @Size(min = 2, max = 150, message = "O autor deve ter entre 2 e 150 caracteres")
     @Column(name = "autor")

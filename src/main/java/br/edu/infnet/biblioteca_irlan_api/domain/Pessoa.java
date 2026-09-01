@@ -1,12 +1,8 @@
 package br.edu.infnet.biblioteca_irlan_api.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -18,29 +14,29 @@ public abstract class Pessoa implements Identificavel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @NotBlank(message = "O nome é obrigatório")
     @Size(min = 2, max = 150, message = "O nome deve ter entre 2 e 150 caracteres")
     @Column(name = "nome")
     private String nome;
-    
+
     @NotBlank(message = "O CPF é obrigatório")
     @Column(name = "cpf")
     private String cpf;
-    
+
     @NotBlank(message = "O email é obrigatório")
     @Email(message = "Email inválido")
     @Column(name = "email")
     private String email;
-    
+
     @NotNull(message = "A data de nascimento é obrigatória")
     @PastOrPresent(message = "A data de nascimento não pode ser futura")
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
-    
+
     @Column(name = "ativo")
     private boolean ativo;
-    
+
     @Column(name = "data_cadastro")
     private LocalDate dataCadastro;
 

@@ -12,7 +12,10 @@ import java.util.Optional;
 @Repository
 public interface AluguelRepository extends JpaRepository<Aluguel, Long> {
     List<Aluguel> findByIsAtivoTrue();
+
     Optional<Aluguel> findByLivroAndIsAtivoTrue(Livro livro);
+
     List<Aluguel> findByLivro(Livro livro);
+
     List<Aluguel> findByAluno(Aluno aluno);
 }
