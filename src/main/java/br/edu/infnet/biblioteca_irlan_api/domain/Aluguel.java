@@ -8,6 +8,7 @@ public class Aluguel implements Identificavel {
     private Long id;
     private LocalDate dataInicioAluguel;
     private LocalDate dataFimAluguel;
+    private Boolean isAtivo;
 
     private Livro livro;
 
@@ -23,6 +24,14 @@ public class Aluguel implements Identificavel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean getAtivo() {
+        return isAtivo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        isAtivo = ativo;
     }
 
     public LocalDate getDataInicioAluguel() {
