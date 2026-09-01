@@ -1,6 +1,7 @@
 package br.edu.infnet.biblioteca_irlan_api.service;
 
 import br.edu.infnet.biblioteca_irlan_api.domain.Identificavel;
+import br.edu.infnet.biblioteca_irlan_api.exception.RecursoNaoEncontradoException;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -23,6 +24,7 @@ public abstract class BaseService<T extends Identificavel> {
     }
 
     public T buscarPorId(Long id) {
+        validarExistencia(id);
         return dados.get(id);
     }
 
@@ -31,6 +33,17 @@ public abstract class BaseService<T extends Identificavel> {
     }
 
     public T obterPorId(Long id) {
+        validarExistencia(id);
         return dados.get(id);
+    }
+
+    private void validarExistencia(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("O ID não pode ser nulo.");
+        }
+
+        if (!dados.containsKey(id)) {
+            throw new RecursoNaoEncontradoException("Recurso não encontrado com o ID " + id);
+        }
     }
 }

@@ -81,8 +81,4 @@ public class AluguelService extends BaseService<Aluguel> {
                 .append("\n"));
         return sb.toString();
     }
-
-    public void devolver(Long id) {
-
-    }
 }

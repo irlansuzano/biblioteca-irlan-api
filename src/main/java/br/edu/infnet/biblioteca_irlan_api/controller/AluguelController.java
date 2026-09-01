@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.CREATED;
+
 @RestController
 @RequestMapping("/alugueis")
 public class AluguelController {
@@ -29,31 +31,29 @@ public class AluguelController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Aluguel> obterAluguelPorId(@PathVariable Long id){
-        try{
-            return ResponseEntity.ok(aluguelService.obterPorId(id));
-        }catch(Exception e){
-            return ResponseEntity.notFound().build();
-        }
-
+        return ResponseEntity.ok(aluguelService.obterPorId(id));
     }
 
     @GetMapping("/livro")
-    public ResponseEntity<Aluguel> obterAluguelPorLivro(Long idLivro){
+    public ResponseEntity<Aluguel> obterAluguelPorLivro(@RequestParam Long idLivro){
         return ResponseEntity.ok(aluguelService.buscarAluguelPorLivro(idLivro));
     }
 
-    @PostMapping
-    public void alugar(Aluguel aluguel) {
+    @PostMapping("/alugar")
+    public ResponseEntity<Aluguel> alugar(@RequestBody Aluguel aluguel) {
         aluguelService.alugar(aluguel);
+        return ResponseEntity.status(CREATED).body(aluguel);
     }
 
-    @PutMapping("{id}/alterar")
-    public void alterarLivroAlugado(@PathVariable Long id, Long idLivroAtual, Aluguel aluguelAlterado) {
+    @PutMapping("/{id}/alterar")
+    public ResponseEntity<Aluguel> alterarLivroAlugado(@PathVariable Long id, @RequestParam Long idLivroAtual, @RequestBody Aluguel aluguelAlterado) {
         aluguelService.alterarLivroAlugado(idLivroAtual, aluguelAlterado.getLivro());
+        return ResponseEntity.ok(aluguelAlterado);
     }
 
-    @PutMapping("{id}/devolver")
-    public void devolver(@PathVariable Long id) {
-        aluguelService.devolver(id);
+    @PutMapping("/{id}/devolver")
+    public ResponseEntity<Void> devolver(@PathVariable Long id) {
+        aluguelService.finalizarAluguel(id);
+        return ResponseEntity.noContent().build();
     }
 }
