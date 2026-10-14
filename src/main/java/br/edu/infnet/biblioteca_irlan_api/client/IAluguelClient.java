@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@FeignClient(name = "biblioteca-service", url = "${client.biblioteca.url:http://localhost:8082}", path = "/alugueis")
+@FeignClient(name = "aluguel-service", url = "${client.biblioteca.url:http://localhost:8082}", path = "/alugueis")
 public interface IAluguelClient {
 
     @GetMapping

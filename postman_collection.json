@@ -1,0 +1,484 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
+		"name": "Biblioteca Irlan API",
+		"description": "API para gestão de aluguéis de livros, devoluções e bibliotecários.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Autenticação",
+			"item": [
+				{
+					"name": "Registrar Bibliotecário",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"admin\",\n    \"senha\": \"admin123\",\n    \"nivelHierarquico\": \"ADMINISTRACAO\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/registrar",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"registrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    pm.collectionVariables.set(\"token\", pm.response.text());",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"admin\",\n    \"senha\": \"admin123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Bibliotecários",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/auth/bibliotecarios",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"bibliotecarios"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Livros",
+			"item": [
+				{
+					"name": "Listar Livros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/livros",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"livros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter Livro por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/livros/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"livros",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Livro por Título",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/livros/titulo/O Senhor dos Aneis",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"livros",
+								"titulo",
+								"O Senhor dos Aneis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incluir Livro",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titulo\": \"O Senhor dos Aneis\",\n    \"autor\": \"J.R.R. Tolkien\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/livros",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"livros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar Livro",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titulo\": \"O Senhor dos Aneis - A Sociedade do Anel\",\n    \"autor\": \"J.R.R. Tolkien\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/livros/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"livros",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir Livro",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/livros/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"livros",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Aluguéis",
+			"item": [
+				{
+					"name": "Listar Aluguéis",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/alugueis",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"alugueis"
+							],
+							"query": [
+								{
+									"key": "idLivro",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "idAluno",
+									"value": "101",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Aluguéis Ativos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/alugueis/ativos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"alugueis",
+								"ativos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter Aluguel por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/alugueis/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"alugueis",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter Aluguel por Livro",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/alugueis/livro?idLivro=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"alugueis",
+								"livro"
+							],
+							"query": [
+								{
+									"key": "idLivro",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar Aluguel",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dataInicioAluguel\": \"2023-10-01\",\n    \"dataFimAluguel\": \"2023-10-15\",\n    \"livroId\": 1,\n    \"alunoId\": 101\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/alugueis/alugar",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"alugueis",
+								"alugar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Renovar Aluguel",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/alugueis/1/renovar?novaDataFim=2023-10-30",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"alugueis",
+								"1",
+								"renovar"
+							],
+							"query": [
+								{
+									"key": "novaDataFim",
+									"value": "2023-10-30"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Devoluções",
+			"item": [
+				{
+					"name": "Registrar Devolução",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"aluguelId\": 1,\n    \"dataDevolucao\": \"2023-10-14\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/devolucoes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"devolucoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Devoluções",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/devolucoes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"devolucoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter Devolução por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/devolucoes/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"devolucoes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8082",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

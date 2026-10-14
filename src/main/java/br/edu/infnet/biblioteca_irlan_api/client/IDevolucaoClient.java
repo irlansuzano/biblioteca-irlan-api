@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-@FeignClient(name = "biblioteca-service", url = "${client.biblioteca.url:http://localhost:8082}", path = "/devolucoes")
+@FeignClient(name = "devolucao-service", url = "${client.biblioteca.url:http://localhost:8082}", path = "/devolucoes")
 public interface IDevolucaoClient {
 
     @PostMapping
