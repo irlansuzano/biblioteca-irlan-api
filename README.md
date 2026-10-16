@@ -1,14 +1,12 @@
 # Biblioteca Irlan API
 
 ## Apresentação do Projeto
-Esta API foi desenvolvida para gerenciar o fluxo de aluguel de livros de uma biblioteca. O sistema permite o cadastro de livros, a gestão de bibliotecários com diferentes níveis de acesso, a realização de aluguéis, renovações e devoluções.
+Esta API foi desenvolvida para gerenciar o fluxo de aluguel de livros de uma biblioteca, visto que a biblioteca funciona como uma parte independente da escola (tem seu próprio fluxo de trabalho e funcionários/responsabilidades separados. O sistema permite o cadastro de livros, a gestão de bibliotecários com diferentes níveis de acesso, a realização de aluguéis, renovações e devoluções.
 
 A solução utiliza uma arquitetura baseada em microsserviços (embora contida neste repositório como um serviço core) e integra-se com serviços de notificação via mensageria.
-
 ## Tecnologias Utilizadas
 - **Java 17** & **Spring Boot 3.3.4**
-- **Spring Data JPA** para persistência de dados.
-- **H2 Database** com persistência em arquivo.
+- **PostgreSQL** para persistência de dados.
 - **Spring Security & JWT** para autenticação e autorização.
 - **RabbitMQ** para envio de notificações assíncronas de aluguel e devolução.
 - **MapStruct** para mapeamento entre Entidades e DTOs.
@@ -46,8 +44,7 @@ Contém as configurações compartilhadas, filtros de segurança, tratamento glo
    ```bash
    ./mvnw spring-boot:run
    ```
-3. Acesse o Console do H2: `http://localhost:8082/h2-console`
-4. Acesse a Documentação Swagger: `http://localhost:8082/swagger-ui/index.html`
+3. Acesse a Documentação Swagger: `http://localhost:8082/swagger-ui/index.html`
 
 ## Documentação da API
 A API utiliza OpenAPI (Swagger). Ao rodar o projeto, a documentação interativa estará disponível, permitindo testar os endpoints e visualizar os esquemas de dados.
