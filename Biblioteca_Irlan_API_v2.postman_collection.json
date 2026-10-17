@@ -1,0 +1,389 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
+		"name": "Biblioteca Irlan API v2",
+		"description": "API para gestão de aluguéis de livros, devoluções e bibliotecários, incluindo processamento em lote.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Livros",
+			"item": [
+				{
+					"name": "Listar Livros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/livros",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"livros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter Livro por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/livros/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"livros",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Livro por Título",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/livros/titulo/Clean Code",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"livros",
+								"titulo",
+								"Clean Code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incluir Livro",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titulo\": \"Clean Code\",\n    \"autor\": \"Robert C. Martin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/livros",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"livros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar Livro",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titulo\": \"Clean Code - 2nd Edition\",\n    \"autor\": \"Robert C. Martin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/livros/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"livros",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir Livro",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/livros/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"livros",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Importar via CSV (Batch)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/livros/batch/import",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"livros",
+								"batch",
+								"import"
+							]
+						},
+						"description": "Upload de arquivo CSV para importação de livros em lote. O arquivo deve conter: titulo,autor"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Aluguéis",
+			"item": [
+				{
+					"name": "Listar Aluguéis",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/alugueis",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"alugueis"
+							],
+							"query": [
+								{
+									"key": "idLivro",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "idAluno",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Aluguéis Ativos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/alugueis/ativos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"alugueis",
+								"ativos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter Aluguel por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/alugueis/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"alugueis",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter Aluguel por Livro",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/alugueis/livro?idLivro=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"alugueis",
+								"livro"
+							],
+							"query": [
+								{
+									"key": "idLivro",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar Aluguel",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dataInicioAluguel\": \"2026-10-16\",\n    \"dataFimAluguel\": \"2026-10-30\",\n    \"livroId\": 1,\n    \"alunoId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/alugueis/alugar",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"alugueis",
+								"alugar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Renovar Aluguel",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/alugueis/1/renovar?novaDataFim=2026-11-15",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"alugueis",
+								"1",
+								"renovar"
+							],
+							"query": [
+								{
+									"key": "novaDataFim",
+									"value": "2026-11-15"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Devoluções",
+			"item": [
+				{
+					"name": "Registrar Devolução",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"aluguelId\": 1,\n    \"dataDevolucao\": \"2026-10-20\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/devolucoes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"devolucoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Devoluções",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/devolucoes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"devolucoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter Devolução por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/devolucoes/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"devolucoes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8082",
+			"type": "string"
+		}
+	]
+}
